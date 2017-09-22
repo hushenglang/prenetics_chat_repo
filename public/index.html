@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="prenetics_chat">
+<head>
+    <meta charset="utf-8" />
+    <title>Prenetics Chat</title>
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+<body>
+
+<!-- define view structure -->
+<div>
+    <div class="container">
+        <div class ="col-sm-12">
+            <img class="logo" src="images/logo.png">
+
+        </div>
+        <div class="col-sm-8 col-sm-offset-2">
+            <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+            <div ng-view></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- load js files -->
+<script src="js/lib/socket.io.js"></script>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-route.min.js"></script>
+<script src="js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/route.js"></script>
+<script src="js/controller/chat.controller.js"></script>
+<script src="js/controller/login.controller.js"></script>
+
+<script src="js/directive/ngEnter.directive.js"></script>
+
+</body>
+</html>

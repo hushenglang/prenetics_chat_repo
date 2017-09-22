@@ -1,0 +1,111 @@
+/**
+ * app.css
+ * @author JoeHu
+ * @date 2017-Sep-17
+ */
+
+a {
+    cursor: pointer;
+}
+
+.logo {
+    width: 230px;
+    margin-top: 10px;
+}
+
+.chat_container {
+    background-image: url("../images/chat_backgroud_image.jpg");
+    height: 462px;
+    width: 568px;
+    margin-top: 10px;
+    margin-left: 12%;
+    overflow: scroll;
+}
+
+.chat_container .chat_contents {
+    padding: 4px;
+    overflow: scroll;
+    height: 90.5%;
+}
+
+.chat_contents .profile_icon {
+    background-image: url("../images/favicon.ico");
+    width: 36px;
+    height: 36px;
+    margin-left: 4px;
+    margin-bottom: -10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.chat_container .chat_message{
+    margin-top: 6px;
+    word-wrap: break-word;
+}
+
+.chat_container .chat_message_left {
+    background: white;
+    max-width: 400px;
+    padding: 8px;
+    border-radius: 0px 12px;
+    display: inline-block;
+}
+
+.chat_container .chat_message_right_section {
+    float: right;
+    margin-right: 8px
+}
+
+.chat_container .chat_message_right {
+    background: #d69742;
+    max-width: 400px;
+    color: white;
+    padding: 8px;
+    border-radius: 12px 0px;
+    display: inline-block;
+}
+
+.chat_container .chat_message_right_new_line {
+    clear: both;
+    overflow: hidden;
+}
+
+#chat_content_bottom{
+    height: 60px;
+}
+
+.chat_bottom {
+    margin-bottom: 154px;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 568px;
+}
+
+.chat_bottom input {
+    border: 0;
+    padding: 10px;
+    width: 100%;
+    margin-right: .5%;
+}
+
+.chat_bottom button {
+    width: 10%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px;
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#messages li {
+    padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+    background: #eee;
+}

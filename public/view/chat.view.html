@@ -1,0 +1,25 @@
+<a class="col-md-4 logout" type="button" ng-click="logout()" style="margin-left: 598px;">logout</a>
+
+<div class="chat_container">
+    <div class="chat_contents">
+        <div ng-repeat="message in messages">
+            <div class="chat_message" ng-if="message.sender=='server'">
+                <span class="profile_icon"></span>
+                <div class="chat_message_left"> {{message.message_text}}</div>
+            </div>
+
+            <div class="chat_message chat_message_right_section" ng-if="message.sender=='client'">
+                <div class="chat_message_right"> {{message.message_text}}</div>
+            </div>
+            <div class="chat_message_right_new_line" ng-if="message.sender=='client'"></div>
+        </div>
+
+        <div id="chat_content_bottom"></div>
+    </div>
+
+    <div class="chat_bottom">
+        <input ng-model="message_text" ng-enter="sendMessage()" autocomplete="off"/>
+        <!--<button ng-click="sendMessage()">Send</button>-->
+    </div>
+</div>
+
