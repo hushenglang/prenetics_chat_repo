@@ -25,12 +25,9 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
     init_chat();
 
     function init_chat(){
-        $timeout(function(){
-            $scope.messages.push({"sender":"server", "message_text":"Hi "+userName+", Welcome to Prenetics!"});
-        }, 500);
-
         // listening on messaging event.
-        socket.on("messaging", function (msg) {
+        socket.on("messaging", function (msgObj) {
+            var msg = msgObj['message'];
             $timeout(function(){
                 $scope.$apply(function(){
                     $scope.messages.push({"sender":"server", "message_text":msg});

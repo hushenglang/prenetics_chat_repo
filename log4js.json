@@ -1,0 +1,14 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "level": "DEBUG"
+    },
+    {
+      "type": "file",
+      "level": "INFO",
+      "filename": "./logs/localhost.log",
+      "maxLogSize": 204800
+    }
+  ]
+}
