@@ -13,12 +13,9 @@ const log = log4js.getLogger("accountRepo");
  * @returns {*}
  */
 exports.insertAccount = function(userName){
-    return dbPool.query("INSERT INTO `user` (`user_name`) VALUES (?)", [userName])
-        .then(function(obj){
-        log.info("@@@@@@@@@@@@@obj:", obj);
-    });
+    return dbPool.query("INSERT INTO `user` (`user_name`) VALUES (?)", [userName]);
 };
 
 exports.findByUserName = function(userName){
-    return dbPool.query("SELECT id, user_name, create_date FROM user WHERE user_name=?", [userName])
+    return dbPool.query("SELECT id, user_name, create_date FROM user WHERE user_name=?", [userName]);
 }

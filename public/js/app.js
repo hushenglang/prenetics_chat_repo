@@ -11,8 +11,8 @@ var app = angular.module('prenetics_chat', ['ngRoute', 'ui.bootstrap']);
 //set listener and others
 app.run(['$rootScope', '$location', '$http', function($rootScope, $location, $http){
     $rootScope.$on('$locationChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        var user_name = sessionStorage.getItem("user_name");
-        if(!user_name){
+        var user = sessionStorage.getItem("user");
+        if(!user){
             $location.path('/login');
         }else{
             $location.path('/chat');

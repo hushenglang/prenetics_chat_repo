@@ -11,15 +11,23 @@ angular
     .module('prenetics_chat')
     .controller('LoginController', LoginController);
 
-LoginController.$inject = ['$scope', '$location'];
-function LoginController($scope, $location) {
+LoginController.$inject = ['$scope', '$location', 'HttpRequestService'];
+function LoginController($scope, $location, HttpRequestService) {
 
     // define handlers
     $scope.login = loginHandler;
 
     //login handler
     function loginHandler() {
-        sessionStorage.setItem("user_name", $scope.user_name);
-        $location.path('/chat');
+        $scope.dataLoading = true;
+        HttpRequestService.post("/api/register", {userName:$scope.user_name})
+            .then(function(response){
+                if(response) {
+                    var userObj = response;
+                    sessionStorage.setItem("user", userObj);
+                    $location.path('/chat');
+                }
+                $scope.dataLoading = false;
+            });
     }
 }

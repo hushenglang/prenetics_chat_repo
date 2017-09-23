@@ -14,7 +14,9 @@ angular
 ChatController.$inject = ['$scope', '$location', '$timeout', '$anchorScroll'];
 function ChatController($scope, $location, $timeout, $anchorScroll) {
 
-    const userName = sessionStorage.getItem("user_name");
+    const user = sessionStorage.getItem("user");
+    const userId = user.id;
+    const userName = user.user_name;
 
     $scope.sendMessage = sendMessage;
     $scope.logout = logout;
@@ -56,7 +58,7 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
 
     function logout(){
         socket.disconnect();
-        sessionStorage.removeItem("user_name");
+        sessionStorage.removeItem("user");
         $location.path('/login');
     }
 

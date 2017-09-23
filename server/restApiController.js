@@ -24,7 +24,7 @@ router.post("/register", function(req, res, next){
             log.info("query user..", userObj);
             if(userObj.length>0){
                 log.info("user exist, return...");
-                res.json(userObj);
+                res.json(userObj[0]);
                 return;
             }else{
                 log.info("user does not exist, create new one...");
