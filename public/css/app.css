@@ -75,11 +75,7 @@ a {
 }
 
 .chat_bottom {
-    margin-bottom: 154px;
-    padding: 3px;
-    position: fixed;
-    bottom: 0;
-    width: 568px;
+    padding: 2px;
 }
 
 .chat_bottom input {
