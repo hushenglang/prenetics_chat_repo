@@ -32,7 +32,7 @@ io.on('connection', function(socket){
     //register
     socket.on("register", function(user){
         log.info("user registeration: ", user.user_name);
-        messageController.greeting(user, socket);
+        messageController.greetingSelfIntro(user, socket);
     });
 
     // disconnect event
@@ -41,9 +41,9 @@ io.on('connection', function(socket){
     });
 
     // chat message event
-    socket.on('messaging', function(msg){
-        log.info('receive message: ' + msg);
-
+    socket.on('messaging', function(msgobj){
+        log.info('receive message: ' + msgobj);
+        messageController.processMessage(msgobj, socket);
     });
 });
 

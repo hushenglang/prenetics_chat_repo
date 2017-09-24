@@ -19,7 +19,7 @@ exports.greeting = function(stage, timeRange, userName){
     var messages = [];
     return dbPool.query("SELECT * FROM general_message WHERE type='GREETING' AND (stage=? OR stage='ALL') " +
         "AND (time_range=? OR time_range='ALL')", [stage, timeRange])
-        .then(function(greetings){
+        .then(function(greetings){ //greeting primary
             var greetingPrimarys = greetings.filter(g=>g['level']=='PRIMARY');
             //randomly choose one message
             var idx = commonUtil.getRandomNumber(0, greetingPrimarys.length-1);
@@ -33,7 +33,7 @@ exports.greeting = function(stage, timeRange, userName){
             messages.push(messageObj);
             return greetings;
         })
-        .then(function(greetings){
+        .then(function(greetings){ //greeting secondary
             var greetingSecondarys = greetings.filter(g=>g['level']=='SECONDARY');
             //randomly choose one message
             var idx = commonUtil.getRandomNumber(0, greetingSecondarys.length-1);
@@ -47,4 +47,29 @@ exports.greeting = function(stage, timeRange, userName){
             return messages;
         });
 
-}
+};
+
+/**
+ * return self intro
+ * @returns {*}
+ */
+exports.selfIntro = function(stage, timeRange, userName){
+
+    var messages = [];
+    return dbPool.query("SELECT * FROM general_message WHERE type='SELFINTRO' AND (stage=? OR stage='ALL') " +
+        "AND (time_range=? OR time_range='ALL')", [stage, timeRange])
+        .then(function(selfIntroes){ //self intro primary
+            var selfIntroPrimarys = selfIntroes.filter(g=>g['level']=='PRIMARY');
+            //randomly choose one message
+            var idx = commonUtil.getRandomNumber(0, selfIntroPrimarys.length-1);
+            var selfIntroPrimary = selfIntroPrimarys[idx];
+            var message = selfIntroPrimary["content"];
+            var messageObj = {
+                "code": "SELFINTRO_PRIMARY",
+                "message": message,
+                "next": "ANALYSIS"
+            }
+            messages.push(messageObj);
+            return messages;
+        });
+};

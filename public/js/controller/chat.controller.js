@@ -24,6 +24,8 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
     var socket = io();
     $scope.messages = [];// local cache all sending/receiving message;
 
+    var lastMsgObj = null; //last message
+
     init_chat();
 
     function init_chat(){
@@ -34,6 +36,7 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
         // listening on messaging event.
         socket.on("messaging", function (msgObj) {
             var msg = msgObj['message'];
+            lastMsgObj = msgObj;
             $timeout(function(){
                 $scope.$apply(function(){
                     $scope.messages.push({"sender":"server", "message_text":msg});
@@ -52,7 +55,14 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
     function sendMessage(){
         var msg = $scope.message_text;
         if(msg) {
-            socket.emit('messaging', msg);
+            socket.emit('messaging', {
+                "next": lastMsgObj.next,
+                "user_id": user.id,
+                "user_name": user.user_name,
+                "message": msg,
+                "sequence": lastMsgObj.sequence,
+                'code': lastMsgObj.code
+            });
             $scope.message_text = "";
             $scope.messages.push({"sender":"client", "message_text":msg});
             $location.hash('chat_content_bottom');
