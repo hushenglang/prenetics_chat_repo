@@ -62,7 +62,7 @@ function processQA(answer, currentSequence, question_code, userId){
         if (question_code == 'GENDER') {
             columnName = "gender";
             columnValue = "male";
-            if (answer.trim() == 'no') {
+            if (answer.trim().indexOf('no')>=0) {
                 columnValue = "female";
             }
         }else if(question_code == "AGE"){
