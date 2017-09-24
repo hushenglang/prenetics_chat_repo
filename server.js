@@ -27,18 +27,22 @@ app.use(log4js.connectLogger(log4js.getLogger('access'), { level: log4js.levels.
 app.use('/api',require('./server/restApiController'));
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    log.info('user connecting...');
 
-    messageController.greeting(socket);
+    //register
+    socket.on("register", function(user){
+        log.info("user registeration: ", user.user_name);
+        messageController.greeting(user, socket);
+    });
 
     // disconnect event
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        log.info('user disconnected');
     });
 
     // chat message event
     socket.on('messaging', function(msg){
-        console.log('receive message: ' + msg);
+        log.info('receive message: ' + msg);
 
     });
 });
@@ -50,5 +54,5 @@ app.use(function (err, req, res, next) {
 });
 
 http.listen(3000, function(){
-    console.log('listening on *:3000');
+    log.info('listening on *:3000');
 });

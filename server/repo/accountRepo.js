@@ -19,3 +19,7 @@ exports.insertAccount = function(userName){
 exports.findByUserName = function(userName){
     return dbPool.query("SELECT id, user_name, create_date FROM user WHERE user_name=?", [userName]);
 }
+
+exports.findProfileByUserId = function(userId){
+    return dbPool.query("SELECT * FROM user_profile WHERE user_id=?", [userId]);
+}

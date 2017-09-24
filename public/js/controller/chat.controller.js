@@ -14,7 +14,7 @@ angular
 ChatController.$inject = ['$scope', '$location', '$timeout', '$anchorScroll'];
 function ChatController($scope, $location, $timeout, $anchorScroll) {
 
-    const user = sessionStorage.getItem("user");
+    const user = angular.fromJson(sessionStorage.getItem("user"));
     const userId = user.id;
     const userName = user.user_name;
 
@@ -27,6 +27,10 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
     init_chat();
 
     function init_chat(){
+
+        // register on server;
+        socket.emit('register', user);
+
         // listening on messaging event.
         socket.on("messaging", function (msgObj) {
             var msg = msgObj['message'];
@@ -40,8 +44,8 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
         });
 
         // avoid refresh the page
-        $location.hash('chat_content_bottom');
-        $anchorScroll();
+        // $location.hash('chat_content_bottom');
+        // $anchorScroll();
     }
 
     // send message function

@@ -24,7 +24,7 @@ function LoginController($scope, $location, HttpRequestService) {
             .then(function(response){
                 if(response) {
                     var userObj = response;
-                    sessionStorage.setItem("user", userObj);
+                    sessionStorage.setItem("user", angular.toJson(userObj));
                     $location.path('/chat');
                 }
                 $scope.dataLoading = false;
