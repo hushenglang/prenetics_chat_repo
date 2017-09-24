@@ -5,12 +5,13 @@
  */
 
 var dbPool = require('../util/dbConnection').pool;
+const accountRepo = require("../repo/accountRepo");
 const log4js = require('log4js');
 const log = log4js.getLogger("analysisService");
 const util = require("util");
 const commonUtil = require("../util/commonUtil");
 
-exports.analysis = function(stage, timeRange, userName){
+exports.analysis = function(stage, timeRange, userId){
 
     var messages = [];
     return dbPool.query("SELECT * FROM general_message WHERE type='ANALYSIS' AND (stage=? OR stage='ALL') " +
@@ -43,6 +44,25 @@ exports.analysis = function(stage, timeRange, userName){
             }
             messages.push(messageObj);
             return messages;
+        })
+        .then(function(messages){
+            // if user profile already existed, generate user profile and return;
+            if(stage=='VETERAN'){
+                return accountRepo.findProfileByUserId(userId)
+                    .then(function(rows){
+                        var userProfile= rows[0];
+                        var messageObj = {
+                            "code": "PROFILE",
+                            "next": "COMPLETE",
+                            "messageType": "profile",
+                            "message": userProfile
+                        };
+                        messages.push(messageObj);
+                        return messages;
+                    });
+            }else{
+                return messages;
+            }
         });
 
 }

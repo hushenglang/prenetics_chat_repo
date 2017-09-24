@@ -27,18 +27,13 @@ exports.greetingSelfIntro = function (user, socket) {
     var timeRange = commonUtil.getTimeRange();
 
     //2.find stage.
-    var cachedUser = userCache.getUserById(user.id);
-    if (!cachedUser) {
-        // query db to find the stage
-        accountService.getUserStage(user.id)
-            .then(function (stage) {
-                user.stage = stage;
-                userCache.cacheUserById(user.id, user);
-                return sendGreetingAndSelfIntro(stage, timeRange, user.user_name, socket)
-            });
-    } else {
-        sendGreetingAndSelfIntro(cachedUser.stage, timeRange, user.user_name, socket)
-    }
+    // query db to find the stage
+    accountService.getUserStage(user.id)
+        .then(function (stage) {
+            user.stage = stage;
+            userCache.cacheUserById(user.id, user);
+            return sendGreetingAndSelfIntro(stage, timeRange, user.user_name, socket)
+        });
 
     //send greeting message and self intro
     function sendGreetingAndSelfIntro(stage, timeRange, userName, socket) {
@@ -68,11 +63,18 @@ exports.processMessage = function (msgObj, socket) {
     } else if (next == 'FILL_PROFILE') {
         fillProfile(msg, socket);
     } else if(next == "QUESTION") {
-        log.info("processMessage QUESTION...", msgObj);
+        log.info("processMessage QUESTION...");
         questionService.processQA(msg, msgObj['sequence'], msgObj['code'], userId)
             .then(function(messageObj){
+                log.info("next question is ", messageObj);
                 socket.emit("messaging", messageObj);
             })
+    } else if(next =="COMPLETE") {
+        log.info("The whole process is completed, just causal chat with user");
+        socket.emit("messaging", {
+            "next": "COMPLETE",
+            "message": "This is demo application, chat bot need more intelligence. See you util i am smart enough..."
+        });
     }
 }
 
@@ -102,7 +104,9 @@ function analysis(userId, socket) {
     var cachedUser = userCache.getUserById(userId);
     var stage = cachedUser.stage;
 
-    analysisService.analysis(stage, timeRange, socket)
+    log.info("stage.......... ", stage);
+
+    analysisService.analysis(stage, timeRange, userId)
         .then(function (messages) {
             messages.forEach(function (messageObj) {
                 socket.emit("messaging", messageObj);

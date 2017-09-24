@@ -37,7 +37,7 @@ router.post("/register", function(req, res, next){
                 accountRepo.findByUserName(userName)
                     .then(function (userObj) {
                         if (userObj) {
-                            res.json(userObj);
+                            res.json(userObj[0]);
                         } else {
                             res.status(403);
                         }

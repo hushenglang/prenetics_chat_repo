@@ -15,8 +15,6 @@ ChatController.$inject = ['$scope', '$location', '$timeout', '$anchorScroll'];
 function ChatController($scope, $location, $timeout, $anchorScroll) {
 
     const user = angular.fromJson(sessionStorage.getItem("user"));
-    const userId = user.id;
-    const userName = user.user_name;
 
     $scope.sendMessage = sendMessage;
     $scope.logout = logout;
@@ -36,10 +34,11 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
         // listening on messaging event.
         socket.on("messaging", function (msgObj) {
             var msg = msgObj['message'];
+            var msgType = msgObj['messageType'];
             lastMsgObj = msgObj;
             $timeout(function(){
                 $scope.$apply(function(){
-                    $scope.messages.push({"sender":"server", "message_text":msg});
+                    $scope.messages.push({"sender":"server", "message_text":msg, "messageType": msgType});
                     $location.hash('chat_content_bottom');
                     $anchorScroll();
                 });
@@ -69,6 +68,7 @@ function ChatController($scope, $location, $timeout, $anchorScroll) {
             $anchorScroll();
         }
     }
+
 
     function logout(){
         socket.disconnect();

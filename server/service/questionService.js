@@ -85,6 +85,7 @@ function processQA(answer, currentSequence, question_code, userId){
                 if(msgObj==null){
                     return {
                         "code": "FINAL",
+                        "next": "COMPLETE",
                         "message": 'Great!, seems we already know better about you, See you next time!'
                     };
                 }else{
@@ -94,8 +95,6 @@ function processQA(answer, currentSequence, question_code, userId){
     }
 
 };
-
-
 
 
 module.exports = {

@@ -5,7 +5,13 @@
         <div ng-repeat="message in messages">
             <div class="chat_message" ng-if="message.sender=='server'">
                 <span class="profile_icon"></span>
-                <div class="chat_message_left"> {{message.message_text}}</div>
+                <div class="chat_message_left" ng-if="message.messageType!='profile'"> {{message.message_text}} </div>
+                <div class="chat_message_left" ng-if="message.messageType=='profile'">
+                    Gender: {{message.message_text.gender}}<br>
+                    Age: {{message.message_text.age}}<br>
+                    Height: {{message.message_text.height}}cm<br>
+                    Weight: {{message.message_text.weight}}kg<br>
+                </div>
             </div>
 
             <div class="chat_message chat_message_right_section" ng-if="message.sender=='client'">
